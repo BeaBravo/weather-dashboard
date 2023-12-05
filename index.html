@@ -21,7 +21,7 @@
   </head>
   <body>
     <header class="p-4 mb-4 bg-dark text-light">
-      <h1>Weather Dashboard</h1>
+      <h1 class="text-center">Weather Dashboard</h1>
     </header>
 
     <main class="container">
@@ -35,17 +35,25 @@
                 class="form-control mb-3"
                 placeholder="Denver"
               />
-              <button class="btn btn-primary" type="button" id="button-addon1">
+              <button
+                class="btn btn-primary w-100"
+                type="submit"
+                id="search-button"
+              >
                 Search
               </button>
             </div>
           </form>
+          <div>
+            <hr />
+            <ol id="history-list"></ol>
+          </div>
         </div>
 
         <div class="col-9">
           <div class="row justify-content-between">
             <div class="row">
-              <div class="mb-4 border border-dark col-12">
+              <div class="mb-4 border border-dark col-12" id="todays-weather">
                 <h1>Current City</h1>
                 <p>Temp</p>
                 <p>Wind</p>
@@ -101,7 +109,8 @@
       integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
       crossorigin="anonymous"
     ></script>
-
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./assets/script.js"></script>
   </body>
 </html>
