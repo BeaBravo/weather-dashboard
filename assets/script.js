@@ -20,43 +20,36 @@ function searchCity(event) {
 function fetchCityData(city) {
   var latitude;
   var longitude;
+  var fiveDayURL;
 
   requestedURL =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
-    "&limit=1&appid=" +
+    "&limit=5&appid=" +
     APIkey;
-
-  console.log(city);
 
   fetch(requestedURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      latitude = data[0].lat;
       longitude = data[0].lon;
-
-      console.log("latitude", latitude);
-
-      console.log("long", longitude);
-
-      console.log("data", data);
-
-      return;
+      latitude = data[0].lat;
+      fiveDayURL =
+        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
+        latitude +
+        "&lon=" +
+        longitude +
+        "&appid=" +
+        APIkey;
+      return fetch(fiveDayURL);
+    })
+    .then(function (response2) {
+      return response2.json();
+    })
+    .then(function (data2) {
+      console.log(data2);
     });
-
-  //   fiveDayURL =
-  //     "api.openweathermap.org/data/2.5/forecast?lat=" +
-  //     latitude +
-  //     "&lon=" +
-  //     longitude +
-  //     "&appid=" +
-  //     APIkey;
-
-  //   fetch(fiveDayURL).then(function (response) {
-  //     console.log(response);
-  //   });
 }
 
 //USER INTERACTIONS
