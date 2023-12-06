@@ -3,16 +3,26 @@ var formEl = $("#city-form");
 var cityNameEl = $('input[name="city-name"]');
 var todaysWeather = $("#todays-weather");
 var fiveDayWeather = $("#5-days-ahead");
+var historyList = $("#history-list");
 
 //DATA
 var APIkey = "271703820aa14bd16fc1a78b4794a1ec";
 var requestedURL;
 var searchHistory = [];
 
-// if ()
-// localStorage.getItem("cities");
-
 //FUNCTIONS
+
+function init() {
+  var storedSearchHistory = JSON.parse(localStorage.getItem("cities"));
+
+  if (storedSearchHistory !== null) {
+    searchHistory = storedSearchHistory;
+    displayForecast(searchHistory[0]);
+  }
+
+  renderHistory();
+}
+
 function searchCity(event) {
   event.preventDefault();
   var city = cityNameEl.val();
@@ -66,6 +76,8 @@ function fetchCityData(city) {
         day5: data2.list[39],
       };
       displayForecast(fiveDayForecast);
+      searchHistory.push(fiveDayForecast);
+      localStorage.setItem("cities", JSON.stringify(searchHistory));
       return;
     });
 }
@@ -126,9 +138,14 @@ function displayForecast(forecast) {
   }
 }
 
-function renderHistory() {}
+function renderHistory() {
+  for (var i = 0; i < searchHistory.length; i++) {
+    //display on screen by creating a list item
+  }
+}
 
 //USER INTERACTIONS
 formEl.on("submit", searchCity);
 
 //INITIALIZATION
+init();
