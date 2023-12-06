@@ -41,14 +41,25 @@ function fetchCityData(city) {
         "&lon=" +
         longitude +
         "&appid=" +
-        APIkey;
+        APIkey +
+        "&units=metric";
       return fetch(fiveDayURL);
     })
     .then(function (response2) {
       return response2.json();
     })
     .then(function (data2) {
-      console.log(data2);
+      console.log(data2.list);
+      var fiveDayForecast = {
+        current: data2.list[0],
+        day1: data2.list[7],
+        day2: data2.list[15],
+        day3: data2.list[23],
+        day4: data2.list[31],
+        day5: data2.list[39],
+      };
+      console.log(fiveDayForecast);
+      return fiveDayForecast;
     });
 }
 
