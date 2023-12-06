@@ -1,6 +1,8 @@
 //DEPENDENCIES
 var formEl = $("#city-form");
 var cityNameEl = $('input[name="city-name"]');
+var todaysWeather = $("#todays-weather");
+var fiveDayWeather = $("#5-days-ahead");
 
 //DATA
 var APIkey = "271703820aa14bd16fc1a78b4794a1ec";
@@ -49,7 +51,9 @@ function fetchCityData(city) {
       return response2.json();
     })
     .then(function (data2) {
+      console.log(data2);
       var fiveDayForecast = {
+        city: data2.city.name,
         current: data2.list[0],
         day1: data2.list[7],
         day2: data2.list[15],
@@ -64,6 +68,26 @@ function fetchCityData(city) {
 
 function displayForecast(forecast) {
   console.log(forecast);
+  //todays weather
+  var todaysdate = dayjs.unix(forecast.current.dt).format("MM/DD/YYYY");
+  todaysWeather.append(
+    "<h1>" +
+      forecast.city +
+      " (" +
+      todaysdate +
+      ")</h1>" +
+      "<p> Temp: " +
+      forecast.current.main.temp +
+      "&deg;C</p>" +
+      "<p>Wind: " +
+      forecast.current.wind.speed +
+      "km/h</p>" +
+      "<p>Humidity: " +
+      forecast.current.main.humidity +
+      "%</p>"
+  );
+
+// 
 }
 
 //USER INTERACTIONS
