@@ -144,12 +144,18 @@ function renderHistory() {
     listEl.text(searchHistory[i].city);
     historyList.append(listEl);
     //add an event listener to this button
-    listEl.on("click", function () {
-      console.log("you clicked a button on the city ", $(this).text());
-      console.log(searchHistory);
-      //need a for loop for search history
-      //match searchHistory[i].city with $(this).text, if it matches displayForecast(searchHistory[i])
-    });
+    listEl.on("click", renderPastCity);
+  }
+}
+
+function renderPastCity() {
+  console.log("you clicked a button on the city ", $(this).text());
+  for (var i = 0; i < searchHistory.length; i++) {
+    //match searchHistory[i].city with $(this).text, if it matches displayForecast(searchHistory[i])
+    if ($(this).text() === searchHistory[i].city) {
+      console.log("it's a match with ", i);
+      displayForecast(searchHistory[i]);
+    }
   }
 }
 
