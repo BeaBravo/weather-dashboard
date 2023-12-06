@@ -19,7 +19,7 @@ deployed site: https://beabravo.github.io/weather-dashboard/
 5. if you would like to go back to a previously looked at city, hit the button on the list with the name of the city
 6. Have fun planning your trip!
 
-<!-- ![screen grab](./assests/) -->
+![screen grab](./assets/screengrab.gif)
 
 ## Credits
 
