@@ -49,7 +49,6 @@ function fetchCityData(city) {
       return response2.json();
     })
     .then(function (data2) {
-      console.log(data2.list);
       var fiveDayForecast = {
         current: data2.list[0],
         day1: data2.list[7],
@@ -58,9 +57,13 @@ function fetchCityData(city) {
         day4: data2.list[31],
         day5: data2.list[39],
       };
-      console.log(fiveDayForecast);
-      return fiveDayForecast;
+      displayForecast(fiveDayForecast);
+      return;
     });
+}
+
+function displayForecast(forecast) {
+  console.log(forecast);
 }
 
 //USER INTERACTIONS
