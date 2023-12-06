@@ -9,7 +9,7 @@ var historyList = $("#history-list");
 var APIkey = "271703820aa14bd16fc1a78b4794a1ec";
 var requestedURL;
 var searchHistory = [];
-
+var listEl;
 //FUNCTIONS
 
 function init() {
@@ -17,7 +17,7 @@ function init() {
 
   if (storedSearchHistory !== null) {
     searchHistory = storedSearchHistory;
-    // displayForecast(searchHistory[0]);
+    displayForecast(searchHistory[searchHistory.length - 1]);
   }
 
   renderHistory();
@@ -26,7 +26,6 @@ function init() {
 function searchCity(event) {
   event.preventDefault();
   var city = cityNameEl.val();
-
   //lookup city in API
 
   fetchCityData(city);
@@ -77,8 +76,9 @@ function fetchCityData(city) {
       displayForecast(fiveDayForecast);
       searchHistory.push(fiveDayForecast);
       localStorage.setItem("cities", JSON.stringify(searchHistory));
-      return;
+      renderHistory();
     });
+  // .then(renderHistory());
 }
 
 function displayForecast(forecast) {
@@ -138,19 +138,19 @@ function displayForecast(forecast) {
 
 function renderHistory() {
   console.log(searchHistory.length);
+  historyList.html("");
   for (var i = 0; i < searchHistory.length; i++) {
     //display on screen by creating a list item as a button
-    var listEl = $("<li>");
+    listEl = $("<li>");
     listEl.addClass("btn my-2 custom-button w-100");
     listEl.text(searchHistory[i].city);
     historyList.append(listEl);
     //add an event listener to this button
-    // listEl.on("click", displayForecast(searchHistory[i]));
   }
 }
 
 //USER INTERACTIONS
 formEl.on("submit", searchCity);
-
+// listEl.on("click");
 //INITIALIZATION
 init();
