@@ -7,6 +7,10 @@ var fiveDayWeather = $("#5-days-ahead");
 //DATA
 var APIkey = "271703820aa14bd16fc1a78b4794a1ec";
 var requestedURL;
+var searchHistory = [];
+
+// if ()
+// localStorage.getItem("cities");
 
 //FUNCTIONS
 function searchCity(event) {
@@ -70,12 +74,19 @@ function displayForecast(forecast) {
   console.log(forecast);
   //todays weather
   var todaysdate = dayjs.unix(forecast.current.dt).format("MM/DD/YYYY");
+  var icon = forecast.current.weather[0].icon;
+  var iconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+  console.log(iconURL);
+
   todaysWeather.append(
     "<h1>" +
       forecast.city +
       " (" +
       todaysdate +
       ")</h1>" +
+      "<img src=" +
+      iconURL +
+      " width=100 height=100>" +
       "<p> Temp: " +
       forecast.current.main.temp +
       "&deg;C</p>" +
@@ -93,11 +104,15 @@ function displayForecast(forecast) {
     var dayAheadEl = $("#day" + i);
     var day = forecast["day" + i];
     var date = dayjs.unix(day.dt).format("MM/DD/YYYY");
-    console.log("looking at day", i);
+    var icon = day.weather[0].icon;
+    var iconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
     dayAheadEl.append(
       "<h5>" +
         date +
         "</h5>" +
+        "<img src=" +
+        iconURL +
+        " width=50 height=50>" +
         "<p> Temp: " +
         day.main.temp +
         "&deg;C</p>" +
@@ -110,6 +125,8 @@ function displayForecast(forecast) {
     );
   }
 }
+
+function renderHistory() {}
 
 //USER INTERACTIONS
 formEl.on("submit", searchCity);
