@@ -74,9 +74,7 @@ function fetchCityData(city) {
         day5: data2.list[39],
       };
       displayForecast(fiveDayForecast);
-      searchHistory.push(fiveDayForecast);
-      localStorage.setItem("cities", JSON.stringify(searchHistory));
-      renderHistory();
+      saveToHistory(fiveDayForecast);
     });
 }
 
@@ -149,13 +147,26 @@ function renderHistory() {
 }
 
 function renderPastCity() {
-  console.log("you clicked a button on the city ", $(this).text());
   for (var i = 0; i < searchHistory.length; i++) {
     //match searchHistory[i].city with $(this).text, if it matches displayForecast(searchHistory[i])
     if ($(this).text() === searchHistory[i].city) {
-      console.log("it's a match with ", i);
       displayForecast(searchHistory[i]);
     }
+  }
+}
+
+function saveToHistory(newCity) {
+  //check if it already exists and if not save it to local storage
+  var isThere;
+  for (var i = 0; i < searchHistory.length; i++) {
+    if (newCity.city === searchHistory[i].city) {
+      isThere = true;
+    }
+  }
+  if (!isThere) {
+    searchHistory.push(newCity);
+    localStorage.setItem("cities", JSON.stringify(searchHistory));
+    renderHistory();
   }
 }
 
