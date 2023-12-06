@@ -17,7 +17,7 @@ function init() {
 
   if (storedSearchHistory !== null) {
     searchHistory = storedSearchHistory;
-    displayForecast(searchHistory[0]);
+    // displayForecast(searchHistory[0]);
   }
 
   renderHistory();
@@ -30,7 +30,7 @@ function searchCity(event) {
   //lookup city in API
 
   fetchCityData(city);
-  return city;
+  cityNameEl.val("");
 }
 
 function fetchCityData(city) {
@@ -65,7 +65,6 @@ function fetchCityData(city) {
       return response2.json();
     })
     .then(function (data2) {
-      console.log(data2);
       var fiveDayForecast = {
         city: data2.city.name,
         current: data2.list[0],
@@ -83,12 +82,11 @@ function fetchCityData(city) {
 }
 
 function displayForecast(forecast) {
-  console.log(forecast);
   //todays weather
+  todaysWeather.html("");
   var todaysdate = dayjs.unix(forecast.current.dt).format("MM/DD/YYYY");
   var icon = forecast.current.weather[0].icon;
   var iconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
-  console.log(iconURL);
 
   todaysWeather.append(
     "<h1>" +
@@ -111,9 +109,9 @@ function displayForecast(forecast) {
   );
 
   // 5-day look ahead rendering
-  //   console.log(forecast["day" + 1]);
   for (i = 1; i < Object.keys(forecast).length - 1; i++) {
     var dayAheadEl = $("#day" + i);
+    dayAheadEl.html("");
     var day = forecast["day" + i];
     var date = dayjs.unix(day.dt).format("MM/DD/YYYY");
     var icon = day.weather[0].icon;
@@ -139,8 +137,15 @@ function displayForecast(forecast) {
 }
 
 function renderHistory() {
+  console.log(searchHistory.length);
   for (var i = 0; i < searchHistory.length; i++) {
-    //display on screen by creating a list item
+    //display on screen by creating a list item as a button
+    var listEl = $("<li>");
+    listEl.addClass("btn my-2 custom-button w-100");
+    listEl.text(searchHistory[i].city);
+    historyList.append(listEl);
+    //add an event listener to this button
+    // listEl.on("click", displayForecast(searchHistory[i]));
   }
 }
 
