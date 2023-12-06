@@ -87,7 +87,28 @@ function displayForecast(forecast) {
       "%</p>"
   );
 
-// 
+  // 5-day look ahead rendering
+  //   console.log(forecast["day" + 1]);
+  for (i = 1; i < Object.keys(forecast).length - 1; i++) {
+    var dayAheadEl = $("#day" + i);
+    var day = forecast["day" + i];
+    var date = dayjs.unix(day.dt).format("MM/DD/YYYY");
+    console.log("looking at day", i);
+    dayAheadEl.append(
+      "<h5>" +
+        date +
+        "</h5>" +
+        "<p> Temp: " +
+        day.main.temp +
+        "&deg;C</p>" +
+        "<p>Wind: " +
+        day.wind.speed +
+        "km/h</p>" +
+        "<p>Humidity: " +
+        day.main.humidity +
+        "%</p>"
+    );
+  }
 }
 
 //USER INTERACTIONS
