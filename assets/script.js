@@ -78,7 +78,6 @@ function fetchCityData(city) {
       localStorage.setItem("cities", JSON.stringify(searchHistory));
       renderHistory();
     });
-  // .then(renderHistory());
 }
 
 function displayForecast(forecast) {
@@ -137,7 +136,6 @@ function displayForecast(forecast) {
 }
 
 function renderHistory() {
-  console.log(searchHistory.length);
   historyList.html("");
   for (var i = 0; i < searchHistory.length; i++) {
     //display on screen by creating a list item as a button
@@ -146,11 +144,17 @@ function renderHistory() {
     listEl.text(searchHistory[i].city);
     historyList.append(listEl);
     //add an event listener to this button
+    listEl.on("click", function () {
+      console.log("you clicked a button on the city ", $(this).text());
+      console.log(searchHistory);
+      //need a for loop for search history
+      //match searchHistory[i].city with $(this).text, if it matches displayForecast(searchHistory[i])
+    });
   }
 }
 
 //USER INTERACTIONS
 formEl.on("submit", searchCity);
-// listEl.on("click");
+
 //INITIALIZATION
 init();
